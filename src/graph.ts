@@ -1,11 +1,6 @@
 import { NarratorNode, GRADE_COLORS } from "./types.js";
 
 declare const cytoscape: any;
-declare const cytoscapeDagre: any;
-
-if (typeof cytoscapeDagre !== "undefined") {
-    cytoscape.use(cytoscapeDagre);
-}
 
 export class SanadVisualizer {
     private cy: any = null;
@@ -21,7 +16,6 @@ export class SanadVisualizer {
         const container = document.getElementById("cy");
         if (!container) return;
 
-        // Subtle dark-emerald parchment radial grid background like Shajara
         container.style.background = "radial-gradient(circle at center, #0d2b1d 0%, #061810 100%)";
 
         const elements = this.buildElements(nodes);
@@ -103,15 +97,18 @@ export class SanadVisualizer {
                 }
             ],
             layout: {
-                name: typeof cytoscapeDagre !== "undefined" ? "dagre" : "breadthfirst",
-                rankDir: "TB",
-                align: "UL",
-                nodeSep: 35,
-                rankSep: 70,
-                edgeSep: 15,
+                name: "breadthfirst",
+                directed: true,
+                roots: "#prophet",
+                padding: 35,
+                spacingFactor: 1.35,
                 animate: true,
                 animationDuration: 400
             }
+        });
+
+        this.cy.ready(() => {
+            this.cy.fit(undefined, 35);
         });
 
         this.cy.on("tap", "node", (evt: any) => {
