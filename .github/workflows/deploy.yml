@@ -29,8 +29,12 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Compile TypeScript
+      - name: Prepare src folder & Compile TypeScript
         run: |
+          mkdir -p src
+          for f in types.ts data.ts graph.ts main.ts; do
+            if [ -f "$f" ]; then mv "$f" src/; fi
+          done
           npm install -g typescript
           tsc
 
