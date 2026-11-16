@@ -29,13 +29,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Compile TypeScript
+      - name: Download Cytoscape & Compile TypeScript
         run: |
+          curl -fsSL https://jsdelivr.net -o cytoscape.min.js
+          if [ -f "src/type.ts" ]; then mv src/type.ts src/types.ts; fi
           npm install -g typescript
           tsc src/*.ts --outDir dist --target ES2020 --module ES2020 --skipLibCheck --ignoreConfig
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
