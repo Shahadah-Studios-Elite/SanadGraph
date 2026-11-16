@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SanadGraph - Interactive Hadith Chain Visualizer | SahihFinder</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com"></script>
+    <script src="https://unpkg.com"></script>
+    <script src="https://unpkg.com"></script>
+</head>
+<body>
+    <header class="sf-navbar">
+        <div class="sf-brand">
+            <span class="sf-logo">SahihFinder</span>
+            <span class="sf-tagline">SanadGraph • Isnad Visualizer</span>
+        </div>
+        <nav class="sf-links">
+            <a href="https://sahihfinder.com/Wiki" target="_blank">Wiki</a>
+            <a href="https://sahihfinder.com/searcher" target="_blank">Searcher</a>
+            <a href="https://sahihfinder.com/checker" target="_blank">Checker</a>
+            <a href="https://sahihfinder.com/jumper" target="_blank">Hadith Jumper</a>
+        </nav>
+    </header>
+
+    <section class="toolbar">
+        <div class="toolbar-group">
+            <label for="hadith-select">Select Hadith Chain:</label>
+            <select id="hadith-select">
+                <option value="intentions">Hadith #1: "Actions are judged by intentions" (Sahih)</option>
+                <option value="gold_chain">Golden Chain: Malik → Nafi' → Ibn Umar (Sahih)</option>
+                <option value="broken_example">Case Study: Broken Chain / Munqati' Example (Da'if)</option>
+            </select>
+        </div>
+
+        <div class="toolbar-group">
+            <button id="fit-btn" class="btn-secondary">Reset View</button>
+            <button id="toggle-builder-btn" class="btn-primary">+ Add Custom Narrator</button>
+        </div>
+    </section>
+
+    <div id="builder-bar" class="builder-bar hidden">
+        <input type="text" id="new-name" placeholder="Narrator Name (e.g., Shu'bah ibn al-Hajjaj)">
+        <input type="number" id="new-death" placeholder="Death Year AH (e.g., 160)">
+        <select id="new-grade">
+            <option value="prophet">Prophet ﷺ (Source)</option>
+            <option value="sahabi">Sahabi (Companion - All 'Adl)</option>
+            <option value="thiqah">Thiqah (Trustworthy & Precise)</option>
+            <option value="saduq">Saduq (Truthful)</option>
+            <option value="daif">Da'if (Weak / Memory Flaw)</option>
+            <option value="matruk">Matruk / Majhul (Abandoned / Unknown)</option>
+        </select>
+        <select id="parent-select">
+            <option value="">Narrated From (Select Teacher)...</option>
+        </select>
+        <button id="add-node-btn" class="btn-gold">Add to Chain</button>
+    </div>
+
+    <main class="workspace">
+        <div class="canvas-container">
+            <div id="hadith-banner" class="hadith-banner">
+                <span id="chain-verdict" class="verdict-pill sahih">SAHIH (AUTHENTIC)</span>
+                <p id="hadith-text">"Verily, actions are judged by intentions..." — Sahih al-Bukhari 1</p>
+            </div>
+            <div id="cy"></div>
+            <div class="legend">
+                <span><i class="dot prophet"></i> Prophet ﷺ</span>
+                <span><i class="dot sahabi"></i> Sahabi</span>
+                <span><i class="dot thiqah"></i> Thiqah</span>
+                <span><i class="dot saduq"></i> Saduq</span>
+                <span><i class="dot daif"></i> Da'if / Broken</span>
+            </div>
+        </div>
+
+        <aside class="inspector">
+            <h2>Narrator Inspector</h2>
+            <p class="inspector-hint">Click any narrator node in the chain to inspect their Jarh wa Ta'dil (reliability), lifespan overlap, and scholarly notes.</p>
+            <div id="inspector-content" class="inspector-card hidden">
+                <div class="badge-row">
+                    <span id="insp-rank" class="rank-tag">Tabi'i</span>
+                    <span id="insp-grade" class="grade-tag">Thiqah</span>
+                </div>
+                <h3 id="insp-name">Narrator Name</h3>
+                <p id="insp-dates" class="dates">Died: 150 AH</p>
+                <div class="divider"></div>
+                <h4>Scholarly Assessment</h4>
+                <p id="insp-bio" class="bio"></p>
+                <h4>Chain Continuity Check</h4>
+                <p id="insp-continuity" class="continuity"></p>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="sf-footer">© 2026 SahihFinder - Shahadah Studios Elite</footer>
+
+    <script type="module" src="dist/main.js"></script>
+</body>
+</html>
