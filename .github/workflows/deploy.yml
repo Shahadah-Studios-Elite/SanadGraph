@@ -29,14 +29,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Prepare src folder & Compile TypeScript
+      - name: Compile TypeScript
         run: |
-          mkdir -p src
-          for f in types.ts data.ts graph.ts main.ts; do
-            if [ -f "$f" ]; then mv "$f" src/; fi
-          done
           npm install -g typescript
-          tsc
+          tsc src/*.ts --outDir dist --target ES2020 --module ES2020 --skipLibCheck
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
