@@ -29,12 +29,12 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Download Cytoscape & Compile TypeScript
+      - name: Install Cytoscape & Compile TypeScript
         run: |
-          curl -fsSL https://jsdelivr.net -o cytoscape.min.js
+          npm install --no-save cytoscape typescript
+          cp node_modules/cytoscape/dist/cytoscape.min.js ./cytoscape.min.js
           if [ -f "src/type.ts" ]; then mv src/type.ts src/types.ts; fi
-          npm install -g typescript
-          tsc src/*.ts --outDir dist --target ES2020 --module ES2020 --skipLibCheck --ignoreConfig
+          npx tsc src/*.ts --outDir dist --target ES2020 --module ES2020 --skipLibCheck --ignoreConfig
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
